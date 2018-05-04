@@ -36,6 +36,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import utils.UrlBuilder;
 
 /**
  *
@@ -43,12 +44,15 @@ import org.w3c.dom.NodeList;
  */
 public class AirPollutionAPI {
 
+    private static final String URL = "http://ville.montreal.qc.ca/rsqa/servlet/makeXmlActuel";
+    
     /**
      * @return air pollution data in Montreal for the current day.
      * @throws IOException
      */
     public DayData getDay() throws IOException {
-        return getDay("");
+        UrlBuilder builder = new UrlBuilder(URL);
+        return getDay(builder.getUrl());
     }
     
     /**
@@ -70,7 +74,9 @@ public class AirPollutionAPI {
      * @throws IOException
      */
     public DayData getDay(int year, int month, int day) throws IOException {
-        return getDay("?date=" + stringifyDate(year) + stringifyDate(month) + stringifyDate(day));
+        UrlBuilder builder = new UrlBuilder(URL);
+        builder.append("date", stringifyDate(year) + stringifyDate(month) + stringifyDate(day));
+        return getDay(builder.getUrl());
     }
     
     
@@ -89,7 +95,7 @@ public class AirPollutionAPI {
     }
     
     private DayData getDay(String string) throws IOException {
-        String response = HttpUtils.httpRequest("http://ville.montreal.qc.ca/rsqa/servlet/makeXmlActuel" + string);
+        String response = HttpUtils.httpRequest(string);
         Document doc = HttpUtils.parseXml(response);
         
         Element dayElement = (Element)doc.getElementsByTagName("journee").item(0);
