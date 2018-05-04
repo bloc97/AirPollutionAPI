@@ -23,6 +23,7 @@
  */
 package airpollution;
 
+import utils.HttpUtils;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
