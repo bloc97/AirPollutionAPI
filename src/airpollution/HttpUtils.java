@@ -23,11 +23,6 @@
  */
 package airpollution;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -48,18 +43,6 @@ import org.xml.sax.SAXException;
  * @author bowen
  */
 public interface HttpUtils {
-    
-    /**
-     * Parses a JSON string into a JsonObject
-     * @param jsonString an json-formatted string
-     * @return a JsonObject representing the json string
-     */
-    public static JsonObject parseJson(String jsonString) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonObject object = new JsonParser().parse(jsonString).getAsJsonObject();
-        
-        return object;
-    }
     
     /**
      * Parses a XML string into a XML Document

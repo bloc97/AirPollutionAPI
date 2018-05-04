@@ -24,6 +24,8 @@
 package airpollution;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -40,13 +42,36 @@ import org.w3c.dom.NodeList;
  */
 public class AirPollutionAPI {
 
+    /**
+     * @return air pollution data in Montreal for the current day.
+     * @throws IOException
+     */
     public DayData getDay() throws IOException {
         return getDay("");
     }
     
+    /**
+     * @param date from 2007/01/01 to now.
+     * @return air pollution data in Montreal for the specified date.
+     * @throws IOException
+     */
+    public DayData getDay(Date date) throws IOException {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return getDay(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DATE));
+    }
+    
+    /**
+     * @param year from 2007 to now.
+     * @param month from 1 to 12.
+     * @param day from 1 to end of month.
+     * @return air pollution data in Montreal for the specified date.
+     * @throws IOException
+     */
     public DayData getDay(int year, int month, int day) throws IOException {
         return getDay("?date=" + stringifyDate(year) + stringifyDate(month) + stringifyDate(day));
     }
+    
     
     private String stringifyDate(int i) {
         String s = Integer.toString(i);
