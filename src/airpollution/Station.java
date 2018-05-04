@@ -90,10 +90,32 @@ public class Station {
         return stringList;
     }
     
+    /**
+     * Available pollutants.
+     * <li>{@link #NO2} <br/> Nitrogen Dioxide</li>
+     * <li>{@link #O3} <br/> Ozone</li>
+     * <li>{@link #PM} <br/> Fine Particulate Matter (PM<sub>2.5</sub>)</li>
+     * <li>{@link #SO2} <br/> Sulfur Dioxide</li>
+     * <li>{@link #CO} <br/> Carbon Monoxide</li>
+     */
     public static enum Pollutant {
-        NO2, O3, PM, SO2, CO;
+
+        /** Nitrogen Dioxide */
+        NO2, 
+        /** Ozone */
+        O3, 
+        /** Fine Particulate Matter (PM<sub>2.5</sub>) */
+        PM, 
+        /** Sulfur Dioxide */
+        SO2, 
+        /** Carbon Monoxide */
+        CO;
         
-        public double getIQA() {
+        /**
+         * @return AQI reference value for the pollutant in grams per centimetre cubed. (g/cm<sup>3</sup>) <br/>
+         * See <a href="http://donnees.ville.montreal.qc.ca/dataset/rsqa-indice-qualite-air">Montreal RSQA</a>
+         */
+        public double getAqiReference() {
             switch (this) {
                 case SO2:
                     return 500d / 1000000d;
@@ -109,9 +131,27 @@ public class Station {
             return 1;
         }
     }
-    
+    /**
+     * Available unit formats.
+     * <li>{@link #AQI} <br/> Air Quality Index</li>
+     * <li>{@link #RELATIVE} <br/> Relative Air Quality</li>
+     * <li>{@link #GPM3} <br/>  Pollutant quantity in gram per centimetre cubed. (g/cm<sup>3</sup>)</li>
+     */
     public static enum Unit {
-        AQI, RELATIVE, GPM3;
+        /**
+         * Air Quality Index <br/>
+         * See <a href="http://www.iqa.mddefp.gouv.qc.ca/contenu/calcul_en.htm">Air Quality Index</a> for more information about AQI. (External Link)
+         */
+        AQI,
+        /**
+         * Relative Air Quality <br/>
+         * Similar to {@link #AQI}, but is divided by 50.
+         */
+        RELATIVE,
+        /**
+         * Pollutant quantity in gram per centimetre cubed. (g/cm<sup>3</sup>)
+         */
+        GPM3;
     }
     
     private final int id;
@@ -180,7 +220,7 @@ public class Station {
             case RELATIVE:
                 return aqi / 50d;
             case GPM3:
-                return (aqi / 50d) * pollutant.getIQA();
+                return (aqi / 50d) * pollutant.getAqiReference();
         }
 
         return aqi;
