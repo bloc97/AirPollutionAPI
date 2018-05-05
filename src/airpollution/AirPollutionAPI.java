@@ -23,7 +23,7 @@
  */
 package airpollution;
 
-import utils.HttpUtils;
+import airpollution.utils.HttpUtils;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,7 +36,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import utils.UrlBuilder;
+import airpollution.utils.UrlBuilder;
 
 /**
  *
